@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es-AR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>Nodos de neurodesarrollo del GCBA</title>
+		<meta name="description" content="Encontrá el nodo de neurodesarrollo más cercano al domicilio de un paciente." />
+		<meta name="theme-color" content="#fbeef3" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#1d1320" media="(prefers-color-scheme: dark)" />
+		<link
+			rel="icon"
+			href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23a8235a'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23fff'/%3E%3C/svg%3E"
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&display=swap" />
+	</head>
+	<body>
+		<div class="app">
+			<header class="masthead">
+				<h1>Nodos de neurodesarrollo</h1>
+				<p>Pediatras de desarrollo infantil del GCBA</p>
+			</header>
+
+			<form id="search-form" class="search" role="search" autocomplete="off" novalidate>
+				<label for="address">Domicilio del paciente</label>
+				<div class="search-row">
+					<input
+						id="address"
+						type="text"
+						autocomplete="off"
+						autocapitalize="off"
+						autocorrect="off"
+						spellcheck="false"
+						enterkeyhint="search"
+						maxlength="200"
+						placeholder="Ej.: Balcarce 50, CABA"
+						aria-describedby="address-help"
+					/>
+					<button type="submit" class="button button--primary">Buscar</button>
+				</div>
+				<p id="address-help" class="search-help">Calle y altura. Si lo sabés, sumá barrio, localidad o partido.</p>
+				<button type="button" id="clear-search" class="link-button" hidden>Borrar búsqueda</button>
+			</form>
+
+			<div id="status" class="status" aria-live="polite"></div>
+
+			<div class="map-frame">
+				<div id="map" role="region" aria-label="Mapa de nodos"></div>
+			</div>
+
+			<section id="nodes" class="nodes" aria-labelledby="list-title">
+				<h2 id="list-title">Nodos de la red</h2>
+				<p id="list-note" class="nodes-note">Cargando nodos…</p>
+				<ol id="node-list" class="node-list"></ol>
+			</section>
+
+			<footer class="footer">
+				<p>La dirección del paciente no se guarda: solo se usa para ubicarla en el mapa.</p>
+				<p>
+					Direcciones: <a href="https://www.argentina.gob.ar/georef">Georef</a>, <a href="https://usig.buenosaires.gob.ar/">USIG</a> y
+					<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.
+				</p>
+			</footer>
+		</div>
+
+		<noscript><p class="noscript">Esta página necesita JavaScript para buscar direcciones.</p></noscript>
+
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "CeMAR 1",
+    "neighborhood": "Paternal",
+    "doctor": "Dra. Romina De Biasio",
+    "address": "Fragata Presidente Sarmiento 2152, CABA"
+  },
+  {
+    "name": "CeMAR 2",
+    "neighborhood": "Barracas",
+    "doctor": "Dra. Luciana Magliocco",
+    "address": "Iriarte 3501, CABA"
+  },
+  {
+    "name": "CeSAC 3",
+    "neighborhood": "Lugano",
+    "hospital": "Htal. Grierson",
+    "doctor": "Dra. Gisela Pi",
+    "address": "Soldado de la Frontera 5144, CABA"
+  },
+  {
+    "name": "CeMAR 3",
+    "neighborhood": "Saavedra",
+    "doctor": "Dra. Florencia Gluckselig",
+    "address": "Galván 3463, CABA"
+  },
+  {
+    "name": "CeSAC 42",
+    "neighborhood": "Boedo",
+    "hospital": "Htal. Durand",
+    "doctor": "Dra. Silvina Patrone",
+    "address": "Av. La Plata 2241, CABA"
+  },
+  {
+    "name": "CeSAC 15",
+    "neighborhood": "San Telmo",
+    "hospital": "Htal. Argerich",
+    "doctor": "Dra. Laura Rodriguez",
+    "address": "Humberto 1° 470, CABA"
+  },
+  {
+    "name": "CeSAC 37",
+    "neighborhood": "Mataderos",
+    "hospital": "Htal. Santojanni",
+    "doctor": "Dra. Ivana Canou",
+    "address": "Av. de los Corrales 6999, CABA"
+  },
+  {
+    "name": "CeMAR 4",
+    "neighborhood": "Palermo",
+    "address": "Av. Cerviño 3417, CABA"
+  }
+]
