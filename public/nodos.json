@@ -3,51 +3,51 @@
     "name": "CeMAR 1",
     "neighborhood": "Paternal",
     "doctor": "Dra. Romina De Biasio",
-    "address": "Fragata Presidente Sarmiento 2152, CABA"
+    "address": "Fragata Pte. Sarmiento 2152"
   },
   {
     "name": "CeMAR 2",
     "neighborhood": "Barracas",
     "doctor": "Dra. Luciana Magliocco",
-    "address": "Iriarte 3501, CABA"
+    "address": "Iriarte 3501"
   },
   {
     "name": "CeSAC 3",
     "neighborhood": "Lugano",
     "hospital": "Htal. Grierson",
     "doctor": "Dra. Gisela Pi",
-    "address": "Soldado de la Frontera 5144, CABA"
+    "address": "Soldado de la Frontera 5144"
   },
   {
     "name": "CeMAR 3",
     "neighborhood": "Saavedra",
     "doctor": "Dra. Florencia Gluckselig",
-    "address": "Galván 3463, CABA"
+    "address": "Galván 3463"
   },
   {
     "name": "CeSAC 42",
     "neighborhood": "Boedo",
     "hospital": "Htal. Durand",
     "doctor": "Dra. Silvina Patrone",
-    "address": "Av. La Plata 2241, CABA"
+    "address": "Av. La Plata 2241"
   },
   {
     "name": "CeSAC 15",
     "neighborhood": "San Telmo",
     "hospital": "Htal. Argerich",
     "doctor": "Dra. Laura Rodriguez",
-    "address": "Humberto 1° 470, CABA"
+    "address": "Humberto 1° 470"
   },
   {
     "name": "CeSAC 37",
     "neighborhood": "Mataderos",
     "hospital": "Htal. Santojanni",
     "doctor": "Dra. Ivana Canou",
-    "address": "Av. de los Corrales 6999, CABA"
+    "address": "Av. de los Corrales 6999"
   },
   {
     "name": "CeMAR 4",
     "neighborhood": "Palermo",
-    "address": "Av. Cerviño 3417, CABA"
+    "address": "Av. Cerviño 3417"
   }
 ]
