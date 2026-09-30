@@ -484,14 +484,6 @@ body.picking #map {
   font-weight: 700;
 }
 
-.node-badge--idle::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--on-raspberry);
-}
-
 .node--first .node-badge {
   width: 36px;
   height: 36px;
@@ -522,6 +514,21 @@ body.picking #map {
   color: var(--raspberry);
 }
 
+/* Inside the bullet the icon fills it and takes the bullet's own color. */
+.node-badge .node-icon {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  vertical-align: 0;
+  color: inherit;
+  stroke-width: 2;
+}
+
+.node--first .node-badge .node-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .popup .node-icon {
   width: 1.05em;
   height: 1.05em;
@@ -535,6 +542,19 @@ body.picking #map {
   align-items: center;
   gap: 10px;
   margin: 8px 0 6px;
+}
+
+.node-rank {
+  flex: none;
+  min-width: 1.1em;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.node--first .node-rank {
+  color: var(--plum);
 }
 
 .ruler {

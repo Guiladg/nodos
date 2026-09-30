@@ -428,21 +428,16 @@ function nodeItem(node: CareNode, index: number, farthest: number): HTMLLIElemen
 	return el(
 		'li',
 		{ class: `node${rank === 1 ? ' node--first' : ''}`, id: node.id },
-		el('span', { class: `node-badge${rank ? '' : ' node-badge--idle'}`, 'aria-hidden': 'true' }, rank),
+		el('span', { class: 'node-badge' }, icon(KINDS[node.kind].paths, KINDS[node.kind].label)),
 		el(
 			'div',
 			{ class: 'node-body' },
-			el(
-				'h3',
-				{ class: 'node-name' },
-				icon(KINDS[node.kind].paths, KINDS[node.kind].label),
-				node.name,
-				node.neighborhood && el('span', { class: 'node-area' }, `, ${node.neighborhood}`)
-			),
+			el('h3', { class: 'node-name' }, node.name, node.neighborhood && el('span', { class: 'node-area' }, `, ${node.neighborhood}`)),
 			rank !== null &&
 				el(
 					'div',
 					{ class: 'node-distance' },
+					el('span', { class: 'node-rank', 'aria-hidden': 'true' }, rank),
 					el('span', { class: 'ruler', 'aria-hidden': 'true' }, el('span', { style: `inline-size: ${rulerWidth}%` })),
 					el('span', { class: 'node-km' }, formatDistance(distance))
 				),
