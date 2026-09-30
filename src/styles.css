@@ -513,6 +513,22 @@ body.picking #map {
   font-weight: 400;
 }
 
+/* Tells a hospital (tall building) from a health centre (small house). */
+.node-icon {
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.35em;
+  vertical-align: -0.17em;
+  color: var(--raspberry);
+}
+
+.popup .node-icon {
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.3em;
+  vertical-align: -0.15em;
+}
+
 /* The distance ruler: bar length is the distance, relative to the farthest node. */
 .node-distance {
   display: flex;

@@ -1,6 +1,7 @@
 [
   {
     "name": "CeMAR 1",
+    "kind": "center",
     "neighborhood": "Paternal",
     "comuna": 15,
     "doctor": "Dra. Romina De Biasio",
@@ -8,6 +9,7 @@
   },
   {
     "name": "CeMAR 2",
+    "kind": "center",
     "neighborhood": "Barracas",
     "comuna": 4,
     "doctor": "Dra. Luciana Magliocco",
@@ -15,6 +17,7 @@
   },
   {
     "name": "CeSAC 3",
+    "kind": "center",
     "neighborhood": "Lugano",
     "comuna": 8,
     "hospital": "Htal. Grierson",
@@ -23,6 +26,7 @@
   },
   {
     "name": "CeMAR 3",
+    "kind": "center",
     "neighborhood": "Saavedra",
     "comuna": 12,
     "doctor": "Dra. Florencia Gluckselig",
@@ -30,6 +34,7 @@
   },
   {
     "name": "CeSAC 42",
+    "kind": "center",
     "neighborhood": "Boedo",
     "comuna": 4,
     "hospital": "Htal. Durand",
@@ -38,6 +43,7 @@
   },
   {
     "name": "CeSAC 15",
+    "kind": "center",
     "neighborhood": "San Telmo",
     "comuna": 1,
     "hospital": "Htal. Argerich",
@@ -46,6 +52,7 @@
   },
   {
     "name": "CeSAC 37",
+    "kind": "center",
     "neighborhood": "Mataderos",
     "comuna": 9,
     "hospital": "Htal. Santojanni",
@@ -54,8 +61,65 @@
   },
   {
     "name": "CeMAR 4",
+    "kind": "center",
     "neighborhood": "Palermo",
     "comuna": 14,
     "address": "Av. Cerviño 3417"
+  },
+  {
+    "name": "Hospital Pirovano",
+    "kind": "hospital",
+    "neighborhood": "Coghlan",
+    "comuna": 12,
+    "address": "Av. Monroe 3555"
+  },
+  {
+    "name": "Hospital Tornú",
+    "kind": "hospital",
+    "neighborhood": "Villa Ortúzar",
+    "comuna": 15,
+    "address": "Combatientes de Malvinas 3002"
+  },
+  {
+    "name": "Hospital Ramos Mejía",
+    "kind": "hospital",
+    "neighborhood": "San Cristóbal",
+    "comuna": 3,
+    "address": "Gral. Urquiza 609"
+  },
+  {
+    "name": "Hospital Elizalde",
+    "kind": "hospital",
+    "neighborhood": "Barracas",
+    "comuna": 4,
+    "address": "Av. Montes de Oca 40"
+  },
+  {
+    "name": "Hospital Durand",
+    "kind": "hospital",
+    "neighborhood": "Caballito",
+    "comuna": 6,
+    "address": "Av. Díaz Vélez 5044"
+  },
+  {
+    "name": "Hospital Rivadavia",
+    "kind": "hospital",
+    "neighborhood": "Recoleta",
+    "comuna": 2,
+    "address": "Av. Gral. Las Heras 2670"
+  },
+  {
+    "name": "Hospital Álvarez",
+    "kind": "hospital",
+    "neighborhood": "Flores",
+    "comuna": 7,
+    "address": "Dr. Juan F. Aranguren 2701"
+  },
+  {
+    "name": "Hospital Piñero",
+    "kind": "hospital",
+    "neighborhood": "Flores",
+    "comuna": 7,
+    "address": "Varela 1301"
   }
 ]

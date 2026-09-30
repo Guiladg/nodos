@@ -10,6 +10,8 @@ import { CABA_CENTER, distanceKm, geocodeAddress, normalizeKey, parseAddress, to
 /** One entry of public/nodos.json. Unknown keys are kept when exporting from #admin. */
 interface NodeRecord {
 	name: string;
+	/** "hospital" for a hospital, anything else (or absent) for a CeSAC/CeMAR. */
+	kind?: string;
 	neighborhood?: string;
 	comuna?: number | string;
 	hospital?: string;
@@ -23,11 +25,13 @@ interface NodeRecord {
 }
 
 type GeoState = 'fixed' | 'pending' | 'found' | 'failed';
+type NodeKind = 'hospital' | 'center';
 
 interface CareNode {
 	raw: NodeRecord;
 	id: string;
 	name: string;
+	kind: NodeKind;
 	neighborhood: string;
 	comuna: string;
 	hospital: string;
@@ -134,6 +138,40 @@ function appendChildren(parent: HTMLElement, children: Child[]): void {
 	}
 }
 
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/** Builds an inline icon that inherits the surrounding text color and size. */
+function icon(paths: readonly string[], label: string): SVGSVGElement {
+	const svg = document.createElementNS(SVG_NS, 'svg');
+	svg.setAttribute('class', 'node-icon');
+	svg.setAttribute('viewBox', '0 0 24 24');
+	svg.setAttribute('fill', 'none');
+	svg.setAttribute('stroke', 'currentColor');
+	svg.setAttribute('stroke-width', '1.7');
+	svg.setAttribute('stroke-linecap', 'round');
+	svg.setAttribute('stroke-linejoin', 'round');
+	svg.setAttribute('role', 'img');
+	svg.setAttribute('aria-label', label);
+	for (const d of paths) {
+		const path = document.createElementNS(SVG_NS, 'path');
+		path.setAttribute('d', d);
+		svg.append(path);
+	}
+	return svg;
+}
+
+// A tall building for a hospital, a small house for a neighborhood health centre.
+const KINDS: Record<NodeKind, { label: string; paths: string[] }> = {
+	hospital: {
+		label: 'Hospital',
+		paths: ['M6.6 20.5V4.4h10.8v16.1', 'M2.5 20.5h19', 'M12 7.6v4.6', 'M9.7 9.9h4.6', 'M10.2 20.5v-4.3h3.6v4.3']
+	},
+	center: {
+		label: 'Centro de salud',
+		paths: ['M2.9 11.4 12 4.4l9.1 7', 'M5.4 9.6V20.5h13.2V9.6', 'M2.5 20.5h19', 'M12 12.9v4.3', 'M9.85 15.05h4.3']
+	}
+};
+
 const asText = (value: unknown): string => (value === null || value === undefined ? '' : String(value).trim());
 const hasPoint = (node: CareNode): node is LocatedNode => node.lat !== null && node.lon !== null;
 const round6 = (value: number): number => Math.round(value * 1e6) / 1e6;
@@ -187,6 +225,7 @@ async function loadNodes(): Promise<CareNode[]> {
 				raw: item,
 				id: `node-${index + 1}`,
 				name: asText(item.name),
+				kind: asText(item.kind).toLowerCase() === 'hospital' ? 'hospital' : 'center',
 				neighborhood: asText(item.neighborhood),
 				comuna: formatComuna(item.comuna),
 				hospital: asText(item.hospital),
@@ -348,7 +387,7 @@ function nodePopup(node: CareNode): HTMLElement {
 	return el(
 		'div',
 		{ class: 'popup' },
-		el('strong', {}, node.name),
+		el('strong', {}, icon(KINDS[node.kind].paths, KINDS[node.kind].label), node.name),
 		(node.neighborhood || node.comuna) && el('span', {}, [node.neighborhood, node.comuna].filter(Boolean).join(', ')),
 		node.address && el('span', {}, displayAddress(node.address)),
 		node.distance !== null && el('span', {}, `A ${formatDistance(node.distance)} del domicilio`),
@@ -393,7 +432,13 @@ function nodeItem(node: CareNode, index: number, farthest: number): HTMLLIElemen
 		el(
 			'div',
 			{ class: 'node-body' },
-			el('h3', { class: 'node-name' }, node.name, node.neighborhood && el('span', { class: 'node-area' }, `, ${node.neighborhood}`)),
+			el(
+				'h3',
+				{ class: 'node-name' },
+				icon(KINDS[node.kind].paths, KINDS[node.kind].label),
+				node.name,
+				node.neighborhood && el('span', { class: 'node-area' }, `, ${node.neighborhood}`)
+			),
 			rank !== null &&
 				el(
 					'div',

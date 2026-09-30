@@ -33,6 +33,7 @@ Cada nodo es un objeto dentro de `public/nodos.json`:
 ```json
 {
   "name": "CeSAC 42",
+  "kind": "center",
   "neighborhood": "Boedo",
   "comuna": 4,
   "hospital": "Htal. Durand",
@@ -46,6 +47,8 @@ Cada nodo es un objeto dentro de `public/nodos.json`:
 Solo `name` y `address` son obligatorios. La dirección va en texto y sin ciudad: todos los nodos son de CABA, así que la página la agrega sola al ubicarlos y al armar el link de "Cómo llegar". Un nodo fuera de la ciudad necesita la localidad o el partido al final de la dirección. La página ubica cada nodo la primera vez y guarda el resultado en el navegador durante 30 días.
 
 `comuna` acepta el número (`4`) o el texto completo, y se muestra después de la dirección.
+
+`kind` vale `"hospital"` o `"center"` (CeSAC y CeMAR). Cada uno lleva su ícono en el listado: un edificio alto para el hospital, una casa para el centro de salud. Si falta, el nodo se toma como centro de salud.
 
 Se puede editar directo desde la web de GitHub: al guardar el cambio, el workflow vuelve a publicar el sitio.
 
