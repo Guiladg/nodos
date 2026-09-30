@@ -126,6 +126,11 @@ export interface GeocodeOptions {
   center?: Point;
   /** Look for similar street names when nothing is found. */
   suggest?: boolean;
+  /**
+   * Place assumed when the text names none, e.g. "CABA" for a city-only directory.
+   * Ignored as soon as the text names a neighborhood, locality or district itself.
+   */
+  defaultPlace?: string;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1269,8 +1274,12 @@ async function findSuggestions(
  * - `error`: every provider failed.
  */
 export async function geocodeAddress(input: string, options: GeocodeOptions = {}): Promise<GeocodeResult> {
-  const { signal, center = CABA_CENTER, suggest = true } = options;
-  const parsed = parseAddress(input);
+  const { signal, center = CABA_CENTER, suggest = true, defaultPlace } = options;
+  let parsed = parseAddress(input);
+  if (parsed.valid && !parsed.place && defaultPlace) {
+    const assumed = parseAddress(`${input}, ${defaultPlace}`);
+    if (assumed.valid && assumed.place) parsed = assumed;
+  }
   const notices: string[] = [];
   if (!parsed.valid) return { status: 'invalid', reason: parsed.reason, notices, parsed };
   const request: RequestOptions = { signal };

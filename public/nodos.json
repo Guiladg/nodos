@@ -2,18 +2,21 @@
   {
     "name": "CeMAR 1",
     "neighborhood": "Paternal",
+    "comuna": 15,
     "doctor": "Dra. Romina De Biasio",
     "address": "Fragata Pte. Sarmiento 2152"
   },
   {
     "name": "CeMAR 2",
     "neighborhood": "Barracas",
+    "comuna": 4,
     "doctor": "Dra. Luciana Magliocco",
     "address": "Iriarte 3501"
   },
   {
     "name": "CeSAC 3",
     "neighborhood": "Lugano",
+    "comuna": 8,
     "hospital": "Htal. Grierson",
     "doctor": "Dra. Gisela Pi",
     "address": "Soldado de la Frontera 5144"
@@ -21,12 +24,14 @@
   {
     "name": "CeMAR 3",
     "neighborhood": "Saavedra",
+    "comuna": 12,
     "doctor": "Dra. Florencia Gluckselig",
     "address": "Galván 3463"
   },
   {
     "name": "CeSAC 42",
     "neighborhood": "Boedo",
+    "comuna": 4,
     "hospital": "Htal. Durand",
     "doctor": "Dra. Silvina Patrone",
     "address": "Av. La Plata 2241"
@@ -34,6 +39,7 @@
   {
     "name": "CeSAC 15",
     "neighborhood": "San Telmo",
+    "comuna": 1,
     "hospital": "Htal. Argerich",
     "doctor": "Dra. Laura Rodriguez",
     "address": "Humberto 1° 470"
@@ -41,6 +47,7 @@
   {
     "name": "CeSAC 37",
     "neighborhood": "Mataderos",
+    "comuna": 9,
     "hospital": "Htal. Santojanni",
     "doctor": "Dra. Ivana Canou",
     "address": "Av. de los Corrales 6999"
@@ -48,6 +55,7 @@
   {
     "name": "CeMAR 4",
     "neighborhood": "Palermo",
+    "comuna": 14,
     "address": "Av. Cerviño 3417"
   }
 ]

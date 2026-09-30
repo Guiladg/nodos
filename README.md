@@ -34,15 +34,18 @@ Cada nodo es un objeto dentro de `public/nodos.json`:
 {
   "name": "CeSAC 42",
   "neighborhood": "Boedo",
+  "comuna": 4,
   "hospital": "Htal. Durand",
   "doctor": "Dra. Silvina Patrone",
-  "address": "Av. La Plata 2241, CABA",
+  "address": "Av. La Plata 2241",
   "phone": "11 1234-5678",
   "notes": "Turnos por el 147"
 }
 ```
 
-Solo `name` y `address` son obligatorios. La dirección va en texto, terminada en `CABA` o en el barrio, la localidad o el partido. La página la ubica sola la primera vez y guarda el resultado en el navegador durante 30 días.
+Solo `name` y `address` son obligatorios. La dirección va en texto y sin ciudad: todos los nodos son de CABA, así que la página la agrega sola al ubicarlos y al armar el link de "Cómo llegar". Un nodo fuera de la ciudad necesita la localidad o el partido al final de la dirección. La página ubica cada nodo la primera vez y guarda el resultado en el navegador durante 30 días.
+
+`comuna` acepta el número (`4`) o el texto completo, y se muestra después de la dirección.
 
 Se puede editar directo desde la web de GitHub: al guardar el cambio, el workflow vuelve a publicar el sitio.
 

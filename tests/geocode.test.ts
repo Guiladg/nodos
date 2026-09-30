@@ -191,6 +191,38 @@ describe('geocodeAddress', () => {
     expect(result.notices[0]).toMatch(/los aromos/);
   });
 
+  it('confines a placeless address to defaultPlace', async () => {
+    const zones: (string | null)[] = [];
+    routes['georef/direcciones'] = (q) => {
+      zones.push(q.get('provincia'));
+      return { direcciones: [georefItem({ street: 'AV LA PLATA', number: 2241, district: 'Comuna 4', lat: -34.6407, lon: -58.4234 })] };
+    };
+    routes.usig = (q) => {
+      zones.push(q.get('direccion'));
+      return { direccionesNormalizadas: [] };
+    };
+    const result = await geocodeAddress('Av. La Plata 2241', { defaultPlace: 'CABA' });
+    expect(result.status).toBe('ok');
+    if (result.status !== 'ok') return;
+    expect(result.match.label).toBe('Av. La Plata 2241, CABA');
+    // Only the city was queried: no province-wide search, and USIG was told the city.
+    expect(zones).toEqual(['02', 'av la plata 2241, CABA']);
+  });
+
+  it('ignores defaultPlace when the address names its own place', async () => {
+    const zones: (string | null)[] = [];
+    routes['georef/direcciones'] = (q) => {
+      zones.push(q.get('departamento'));
+      return { direcciones: [georefItem({ street: 'AV MAIPU', number: 2356, province: '06', district: 'Vicente López', locality: 'Olivos', lat: -34.5053, lon: -58.4936 })] };
+    };
+    routes.usig = () => ({ direccionesNormalizadas: [] });
+    const result = await geocodeAddress('Av. Maipú 2356, Vicente López', { defaultPlace: 'CABA' });
+    expect(result.status).toBe('ok');
+    if (result.status !== 'ok') return;
+    expect(result.match.label).toBe('Av. Maipu 2356, Olivos, Vicente López');
+    expect(zones).toEqual(['Vicente López']);
+  });
+
   it('never calls the providers for text without a street', async () => {
     const result = await geocodeAddress('1234');
     expect(result.status).toBe('invalid');

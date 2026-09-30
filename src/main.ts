@@ -1,7 +1,7 @@
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
-import { CABA_CENTER, distanceKm, geocodeAddress, normalizeKey, toPoint, type GeocodeResult, type Match, type Point } from './geocoder.ts';
+import { CABA_CENTER, distanceKm, geocodeAddress, normalizeKey, parseAddress, toPoint, type GeocodeResult, type Match, type Point } from './geocoder.ts';
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                       */
@@ -11,6 +11,7 @@ import { CABA_CENTER, distanceKm, geocodeAddress, normalizeKey, toPoint, type Ge
 interface NodeRecord {
 	name: string;
 	neighborhood?: string;
+	comuna?: number | string;
 	hospital?: string;
 	doctor?: string;
 	address?: string;
@@ -28,6 +29,7 @@ interface CareNode {
 	id: string;
 	name: string;
 	neighborhood: string;
+	comuna: string;
 	hospital: string;
 	doctor: string;
 	address: string;
@@ -64,6 +66,8 @@ type PatientInput = Point & { label: string; sources: readonly string[]; kind?: 
 /* -------------------------------------------------------------------------- */
 
 const NODES_URL = `${import.meta.env.BASE_URL}nodos.json`;
+// Every node is in the city, so addresses in nodos.json leave it out.
+const DEFAULT_PLACE = 'CABA';
 // Only node locations are cached. Patient addresses are never stored.
 const CACHE_KEY = 'nodes-geocoded-v1';
 const CACHE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -136,6 +140,21 @@ const round6 = (value: number): number => Math.round(value * 1e6) / 1e6;
 const isPrecise = (candidate: Pick<Match, 'kind'>): boolean => candidate.kind === 'address' || candidate.kind === 'intersection';
 const displayAddress = (address: string): string => address.replace(/,\s*(?:caba|capital federal|ciudad aut[oó]noma de buenos aires)\s*$/i, '');
 
+/** "15" or "Comuna 15" -> "Comuna 15"; anything else is shown as written. */
+function formatComuna(value: unknown): string {
+	const text = asText(value);
+	if (!text) return '';
+	return /^\d{1,2}$/.test(text) ? `Comuna ${text}` : text;
+}
+
+/**
+ * Node addresses are written without the city, so anything sent outside the page
+ * (a map service, a geocoder) needs it spelled out.
+ */
+function fullAddress(address: string): string {
+	return parseAddress(address).place ? address : `${address}, ${DEFAULT_PLACE}`;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Map                                                                         */
 /* -------------------------------------------------------------------------- */
@@ -169,6 +188,7 @@ async function loadNodes(): Promise<CareNode[]> {
 				id: `node-${index + 1}`,
 				name: asText(item.name),
 				neighborhood: asText(item.neighborhood),
+				comuna: formatComuna(item.comuna),
 				hospital: asText(item.hospital),
 				doctor: asText(item.doctor),
 				address: asText(item.address),
@@ -206,7 +226,7 @@ async function geocodeNodes(): Promise<void> {
 
 	await runInPool(pending, 2, async (node) => {
 		try {
-			const result = await geocodeAddress(node.address, { suggest: false });
+			const result = await geocodeAddress(node.address, { suggest: false, defaultPlace: DEFAULT_PLACE });
 			const best = result.status === 'ok' ? result.match : result.status === 'choices' ? result.choices[0] : undefined;
 			if (best) {
 				Object.assign(node, {
@@ -329,7 +349,7 @@ function nodePopup(node: CareNode): HTMLElement {
 		'div',
 		{ class: 'popup' },
 		el('strong', {}, node.name),
-		node.neighborhood && el('span', {}, node.neighborhood),
+		(node.neighborhood || node.comuna) && el('span', {}, [node.neighborhood, node.comuna].filter(Boolean).join(', ')),
 		node.address && el('span', {}, displayAddress(node.address)),
 		node.distance !== null && el('span', {}, `A ${formatDistance(node.distance)} del domicilio`),
 		el('a', { href: directionsUrl(node), target: '_blank', rel: 'noopener' }, 'Cómo llegar')
@@ -344,7 +364,7 @@ function formatDistance(km: number): string {
 function directionsUrl(node: CareNode): string {
 	const params = new URLSearchParams({
 		api: '1',
-		destination: node.address ? `${node.address}, Argentina` : `${node.lat},${node.lon}`,
+		destination: node.address ? `${fullAddress(node.address)}, Argentina` : `${node.lat},${node.lon}`,
 		travelmode: 'transit'
 	});
 	if (state.patient) params.set('origin', `${state.patient.lat.toFixed(6)},${state.patient.lon.toFixed(6)}`);
@@ -383,7 +403,7 @@ function nodeItem(node: CareNode, index: number, farthest: number): HTMLLIElemen
 				),
 			node.hospital && el('p', { class: 'node-line' }, node.hospital),
 			node.doctor && el('p', { class: 'node-line node-line--strong' }, node.doctor),
-			node.address && el('p', { class: 'node-line' }, displayAddress(node.address)),
+			node.address && el('p', { class: 'node-line' }, [displayAddress(node.address), node.comuna].filter(Boolean).join(', ')),
 			node.phone && el('p', { class: 'node-line' }, el('a', { href: `tel:${node.phone.replace(/[^\d+]/g, '')}` }, node.phone)),
 			node.notes && el('p', { class: 'node-line node-line--note' }, node.notes),
 			geoNote(node),
