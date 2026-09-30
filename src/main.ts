@@ -345,7 +345,7 @@ function drawNodes(): void {
 		const rank = node.distance !== null ? index + 1 : null;
 		if (!node.marker) {
 			const marker = L.marker([node.lat, node.lon], {
-				icon: nodeIcon(rank),
+				icon: nodeIcon(node.kind, rank),
 				title: node.name,
 				alt: node.name,
 				riseOnHover: true,
@@ -364,19 +364,20 @@ function drawNodes(): void {
 			node.marker = marker;
 		} else {
 			node.marker.setLatLng([node.lat, node.lon]);
-			if (node.rank !== rank) node.marker.setIcon(nodeIcon(rank));
+			if (node.rank !== rank) node.marker.setIcon(nodeIcon(node.kind, rank));
 		}
 		node.rank = rank;
 		node.marker.setZIndexOffset(rank ? 1000 - rank : 0);
 	});
 }
 
-function nodeIcon(rank: number | null): L.DivIcon {
+function nodeIcon(kind: NodeKind, rank: number | null): L.DivIcon {
 	const first = rank === 1;
 	const size = first ? 38 : 30;
 	return L.divIcon({
-		className: `pin-node${first ? ' pin-node--first' : ''}${rank ? '' : ' pin-node--idle'}`,
-		html: `<span>${rank ?? ''}</span>`,
+		className: `pin-node${first ? ' pin-node--first' : ''}`,
+		// The pin carries the same icon as the list bullet; the nearest one is drawn larger.
+		html: `<span>${icon(KINDS[kind].paths, KINDS[kind].label).outerHTML}</span>`,
 		iconSize: [size, size],
 		iconAnchor: [size / 2, size / 2],
 		popupAnchor: [0, -size / 2]

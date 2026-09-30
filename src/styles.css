@@ -398,18 +398,24 @@ body.picking #map {
   color: var(--on-raspberry);
 }
 
-.pin-node--idle span::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--on-raspberry);
-}
-
 .pin-node--first span {
   background: var(--plum);
   color: var(--blush);
   font-size: 1rem;
+}
+
+.pin-node .node-icon {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  vertical-align: 0;
+  color: inherit;
+  stroke-width: 2;
+}
+
+.pin-node--first .node-icon {
+  width: 21px;
+  height: 21px;
 }
 
 .pin-choice span {
